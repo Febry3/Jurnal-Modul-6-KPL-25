@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace modul6_1302220084
 
         public SayaTubeVideo(String title)
         {
+            Debug.Assert(title.Length <= 200 && title != null, "Judul terlalu panjang");
             Random rdm = new Random();
             this.title = title;
             this.id = rdm.Next(10000, 99999);
@@ -22,7 +24,18 @@ namespace modul6_1302220084
 
         public void IncreasePlayCount(int playCount)
         {
-            this.playCount = playCount;
+            Debug.Assert(playCount <= 25000000, "input yang ingin ditambahkan melebihi 25 juta");
+            Debug.Assert(playCount >= 0, "input tidak boleh negatif");
+            try
+            {
+                checked
+                {
+                    this.playCount+= playCount;
+                }
+            } catch { 
+                Console.WriteLine("Play Count telah melebihi batas tertinggi integer");
+            }
+            
         }
 
         public void PrintVideoDetails()
